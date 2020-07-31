@@ -1,0 +1,30 @@
+<template>
+	<lightning-record-edit-form object-api-name="BoatReview__c" onsubmit={handleSubmit} onsuccess={handleSuccess}>
+		<lightning-messages></lightning-messages>
+		<lightning-layout multiple-rows vertical-align="start">
+			<lightning-layout-item size="8" padding="horizontal-small">
+				<div class="slds-form-element">
+					<label class="slds-form-element__label" for="review-name">
+						<abbr class="slds-required" title="required">*</abbr>
+						Review Subject
+					</label>
+					<lightning-input-field id="review-name" field-name="Name" variant="label-hidden" required></lightning-input-field>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item size="4" padding="horizontal-small">
+				<div class="slds-form-element">
+					<label class="slds-form-element__label" for="record-name">Rating</label>
+					<div class="slds-form-element__control">
+						<c-five-star-rating onratingchange={handleRatingChanged}></c-five-star-rating>
+					</div>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item padding="horizontal-small">
+				<lightning-input-field field-name="Comment__c" required></lightning-input-field>
+			</lightning-layout-item>
+		</lightning-layout>
+		<div class="slds-align_absolute-center">
+			<lightning-button label="Submit" type="submit" icon-name="utility:save"></lightning-button>
+		</div>
+	</lightning-record-edit-form>
+</template>

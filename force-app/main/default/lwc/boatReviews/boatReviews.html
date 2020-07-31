@@ -1,0 +1,66 @@
+<template>
+  <!-- div for when there are no reviews available -->
+  <div class="slds-align_absolute-center slds-text-heading_medium" if:false={reviewsToShow}>
+      No reviews available
+  </div>
+  <!-- div for when there are reviews available -->
+  <div>
+      <!-- insert spinner -->
+      <template if:true={isLoading}>
+          <lightning-spinner size="small" variant="brand" alternative-text="Loading">
+          </lightning-spinner>
+      </template>
+      <template if:true={reviewsToShow}>
+          <div class="slds-feed reviews-style slds-is-relative slds-scrollable_y">
+              <ul class="slds-feed__list">
+                  <!-- start iteration -->
+                  <template for:each={boatReviews} for:item="boatReview">
+                      <li class="slds-feed__item" key={boatReview.Id}>
+                          <article class="slds-post">
+                              <header class="slds-post__header slds-media">
+                                  <div class="slds-media__figure">
+                                      <lightning-avatar src={boatReview.CreatedBy.SmallPhotoUrl} variant="circle">
+                                      </lightning-avatar>
+                                      <!-- display the creator’s picture -->
+                                  </div>
+                                  <div class="slds-media__body">
+                                      <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                          <p>
+                                              <!-- display creator’s name -->
+                                              <a data-record-id={boatReview.CreatedBy.Id} onclick={navigateToRecord}
+                                                  title={boatReview.CreatedBy.Name}>
+                                                  {boatReview.CreatedBy.Name}
+                                              </a>
+                                              <span class="slds-m-left_x-small">
+                                                  <!-- display creator’s company name CreatedBy.CompanyName -->
+                                                  {boatReview.CreatedBy.CompanyName}
+                                              </span>
+                                          </p>
+                                      </div>
+                                      <p class="slds-text-body_small">
+                                          <!-- display created  date -->
+                                          <lightning-formatted-date-time value={boatReview.CreatedDate}>
+                                          </lightning-formatted-date-time>
+                                      </p>
+                                  </div>
+                              </header>
+                              <div class="slds-text-longform">
+                                  <p class="slds-text-title_caps">
+                                      <!-- display Name -->
+                                      {boatReview.Name}
+                                  </p>
+                                  <!-- display Comment__c -->
+                                  <lightning-formatted-rich-text value={boatReview.Comment__c}>
+                                  </lightning-formatted-rich-text>
+                              </div>
+                              <!-- display five star rating on readonly mode -->
+                              <c-five-star-rating read-only="true" value={boatReview.Rating__c}></c-five-star-rating>
+                          </article>
+                      </li>
+                  </template>
+                  <!-- end iteration -->
+              </ul>
+          </div>
+      </template>
+  </div>
+</template>
